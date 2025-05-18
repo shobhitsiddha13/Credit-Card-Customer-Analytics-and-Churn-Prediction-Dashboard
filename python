@@ -1,0 +1,24 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+df = pd.read_excel("credit_card_customer_data_dashboard.xlsx", sheet_name="Sheet1")
+
+card_churn = df.groupby('Card_Type')['Churn'].mean()
+
+income_churn = df.groupby('Income_Level')['Churn'].mean()
+
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+sns.barplot(x=card_churn.index, y=card_churn.values, palette="viridis", ax=axes[0])
+axes[0].set_title("Churn Rate by Card Type")
+axes[0].set_ylabel("Churn Rate")
+
+sns.barplot(x=income_churn.index, y=income_churn.values, palette="viridis", ax=axes[1])
+axes[1].set_title("Churn Rate by Income Level")
+axes[1].set_ylabel("Churn Rate")
+
+plt.tight_layout()
+plt.show()
+
